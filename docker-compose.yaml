@@ -1,0 +1,30 @@
+version: '3.9'
+services:
+  nginxbuilder: 
+  build: C:\Users\jorda\Documents\Artesis Plantijn\devops\chat-base-app
+  image: "customnginx"
+  container_name: dockercomosenginx
+  web: 
+    container_name: dockercomosenginx
+    image: customnginx
+    ports:
+      - "80:80"
+    depends_on:
+      - database
+  database:
+        image: postgres:latest
+        environment:
+            - POSTGRES_USER=admin
+            - POSTGRES_PASSWORD=admin1234
+            - POSTGRES_DB=productDb
+        ports: 
+            - "5432:5432"
+        restart: always
+        volumes: 
+            - database-data:/var/lib/postgresql/data/
+volumes:
+  - database-data
+
+
+
+
